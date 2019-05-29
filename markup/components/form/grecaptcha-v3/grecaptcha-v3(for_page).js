@@ -10,7 +10,7 @@ function onRecaptchaLoadCallback() {
           action: 'contactForm'
       })
           .then(function (token) {
-              sessionStorage.setItem('captcha', token);
+              console.log(token, 'ttt');
               window.reloadCaptcha = function() {
                   grecaptcha.execute(grecaptchaBadge, {
                       action: 'contactForm'

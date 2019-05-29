@@ -14,11 +14,42 @@ export type IInputData = Data | Data[];
 
 export abstract class Input<T extends IInputForm>{
   protected input: T;
+  protected errorNode: Element;
   protected customValidation = new CustomValidation(); 
 
   constructor(element: T) {
     this.input = element;
+    this.errorNode = this.input.parentNode.querySelector('.error');
+
+    this.input.addEventListener('invalid', (e) => {
+      this.check();
+      e.preventDefault();
+    });
+
+    this.input.addEventListener('change', (e) => {
+      this.check();
+    })
     return this;
+  }
+
+  protected check() {
+    this.input.setCustomValidity(
+      this.customValidation
+      .checkValidity(this.input)
+      .getInvaliditiesString()
+      );
+    this.setError();
+  }
+
+  protected setError() {
+    if (this.errorNode) {
+      this.errorNode.innerHTML = this.customValidation.getInvaliditiesForHTML()
+    } else {
+      this.errorNode = document.createElement('div');
+      this.errorNode.classList.add('error');
+      this.errorNode.innerHTML = this.customValidation.getInvaliditiesForHTML();
+      this.input.insertAdjacentElement('afterend', this.errorNode);
+    }
   }
 
   public clear() {
@@ -61,12 +92,5 @@ export abstract class Input<T extends IInputForm>{
 
   public error() {
     this.input.classList.add('error');
-  }
-
-  public check() {
-    console.log(this);
-    this.customValidation.checkValidity(this.input);
-    console.log(this.customValidation.invalidities);
-    return this;
   }
 }

@@ -1,7 +1,7 @@
 import { Input } from '../input';
 import IMask from 'imask';
 
-export default class InputMask extends Input<HTMLInputElement> {
+export class InputMask extends Input<HTMLInputElement> {
   public mask: any;
 
   constructor(element: HTMLInputElement){

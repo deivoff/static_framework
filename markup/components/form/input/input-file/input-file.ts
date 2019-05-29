@@ -1,6 +1,6 @@
 import { Input, IInputData } from '../input';
 
-export default class InputFile extends Input<HTMLInputElement>{
+export class InputFile extends Input<HTMLInputElement>{
   private file: any;
   constructor(element: HTMLInputElement){
     super(element);

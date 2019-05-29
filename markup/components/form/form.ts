@@ -1,8 +1,10 @@
-import { Input, IInputForm } from "./input/input";
-import InputMask from "./input/input-mask/input-mask";
-import InputFile from "./input/input-file/input-file";
-import InputSelect from "./input/input-select/input-select";
-import InputDefault from "./input/input-default/input-default";
+import axios from 'axios';
+import { Input, IInputForm, } from "./input/input";
+import { InputMask } from "./input/input-mask/input-mask";
+import { InputFile } from "./input/input-file/input-file";
+import { InputDefault } from "./input/input-default/input-default";
+import { InputSelect } from "./input/input-select/input-select";
+import { addTokenOnForm } from "./grecaptcha-v3/grecaptcha-v3";
 
 export class Form {
   private form: HTMLFormElement;
@@ -20,17 +22,41 @@ export class Form {
   constructor(element: HTMLFormElement) {
     this.form = element;
     this.inputs = this.inputsCreate();
-
-    this.inputs.forEach(block => block.check());
-    this.formSubmit();
+    this.form.addEventListener('submit', (e) => {
+      this.formSubmit();
+      e.preventDefault();
+    })
     return this;
   }
 
   public formSubmit() {
-    this.form.addEventListener('submit', (e: Event) => {
-      e.preventDefault();
-      const obj = this.createFormData();
-    })
+    this.sendForm(
+      this.form.action,
+      this.createFormData(),
+      addTokenOnForm(this.form)
+    )
+  }
+
+  private sendForm(url: string, data: FormData, middleCheck?: boolean ) {
+    /* Проверяем, прошла ли проверка, 
+      если да, то обращаем 
+      ее в false для возможности 
+      работы с undefined
+    */
+    if (middleCheck === true) {
+      middleCheck = false;
+    }
+
+    if (!middleCheck) {
+      this.formDisabled();
+      axios({
+        method: 'post',
+        url,
+        data,
+      }).then((res) => {
+        console.log(res);
+      })
+    }
   }
 
   public formDisabled() {

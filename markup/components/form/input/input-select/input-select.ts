@@ -1,12 +1,11 @@
 import { Input, IInputData } from '../input';
 import Choices from 'choices.js';
 
-export default class InputSelect extends Input<HTMLSelectElement> {
+export class InputSelect extends Input<HTMLSelectElement> {
   constructor(element: HTMLSelectElement){
-    super(element);
     const choises = new Choices(element);
+    super(element);
     this.isEmptyListener();
-    console.log(choises);
   }
 
   getData(): IInputData {
