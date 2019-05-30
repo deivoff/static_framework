@@ -5,11 +5,7 @@ block content
       include ../components/modal/modal.pug
 
       form.cf-form(action='/api/test')
-         input.cf-input(type="text" name='erer' )
-         input.cf-input(type="file" name='333')
-         select.cf-input(name="asd" required)
-            option(value="213") sdadasd
-            option(value="3243") asdasdas
+         input.cf-input(type="text" name='erer')
          input.cf-input(type="tel" 
             name='eeee' 
             pattern='^((\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{7,10}$'
@@ -17,7 +13,7 @@ block content
             required)
          button(type="submit") Jngfhdbn
 
-      script(src="https://www.google.com/recaptcha/api.js?render=explicit&onload=onRecaptchaLoadCallback")
-      script
+      // script(src="https://www.google.com/recaptcha/api.js?render=explicit&onload=onRecaptchaLoadCallback")
+      // script
          include ../components/form/grecaptcha-v3/grecaptcha-v3(for_page).js
-      .grecaptcha#grecaptcha(data-sitekey="6LcWm5kUAAAAAIzFRTkBAslTq2BaGv9RpmGEuihj")
+      // .grecaptcha#grecaptcha

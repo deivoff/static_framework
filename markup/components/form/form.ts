@@ -38,16 +38,11 @@ export class Form {
   }
 
   private sendForm(url: string, data: FormData, middleCheck?: boolean ) {
-    /* Проверяем, прошла ли проверка, 
-      если да, то обращаем 
-      ее в false для возможности 
-      работы с undefined
-    */
-    if (middleCheck === true) {
-      middleCheck = false;
+    if (middleCheck === undefined) {
+      middleCheck = true;
     }
 
-    if (!middleCheck) {
+    if (middleCheck) {
       this.formDisabled();
       axios({
         method: 'post',

@@ -1,26 +1,45 @@
 const fs = require('fs'),
   path = require('path'),
   webpack = require('webpack'),
-  HtmlWebpackPlugin = require('html-webpack-plugin'),
-  MiniCssExtractPlugin = require('mini-css-extract-plugin'),
   autoprefixer = require('autoprefixer-stylus');
+  HtmlWebpackPlugin = require('html-webpack-plugin'),
+  MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const pages = fs
-  .readdirSync('./markup/pages/')
-  .filter(fileName => {
-    return fileName.indexOf('_template') < 0;
-  })
-  .map(fileName => {
-    return new HtmlWebpackPlugin({
-      filename: fileName.replace('pug', 'html'),
-      template: `./markup/pages/${fileName}`,
-      inject: false
-    });
-  });
+
+const utils = {
+  /**
+   * Формирование конфигураций страниц для
+   * их дальнейшей сборки
+   */
+  pages: fs.readdirSync('./markup/pages/')
+    .filter((fileName) => fileName.indexOf('_template') < 0)
+    .map((fileName) => {
+      return new HtmlWebpackPlugin({
+        filename: fileName.replace('pug', 'html'),
+        template: `./markup/pages/${fileName}`,
+        inject: false
+      })
+    }),
+  /**
+   * Формирование путей для копирования ресурсов,
+   * расположенных в компонентах
+   */
+  componentsAssets: fs.readdirSync('./markup/components/')
+    .filter((componentName) => fs.existsSync(`./markup/components/${componentName}/assets/`))
+    .map((componentName) => ({
+      from: `./markup/components/${componentName}/assets/`,
+      to: `./static/img/assets/${componentName}/`,
+    })),
+}
 
 const config = {
   entry: {
-    'static/js/main': './markup/static/ts/main.ts',
+    'static/js/main.bundle.js': './markup/static/ts/main.ts', // scripts
+    'static/css/main.bundle': './markup/static/stylus/main.styl' //styles
+  },
+  output: {
+      path: __dirname + '/build/',
+      filename: "[name]"
   },
   devtool: 'inline-source-map',
   devServer: {
@@ -30,10 +49,6 @@ const config = {
       watchContentBase: true,
       hot: true,
     },
-  output: {
-    path: path.resolve(__dirname, 'build'),
-    filename: '[name].bundle.js'
-  },
   module: {
     rules: [
       {
@@ -44,6 +59,14 @@ const config = {
       {
         test: /\.pug$/,
         use: ['html-loader?attrs=false', 'pug-html-loader']
+      },
+      {
+        test: /\.(ico|svg|png|jpg|gif|mp4|mov|pdf|otf)$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+          outputPath: 'static/assets/',
+        },
       },
       {
         test: /\.styl(us)?$/,
@@ -64,7 +87,7 @@ const config = {
     extensions: [ '.tsx', '.ts', '.js' ]
   },
   plugins: [
-    ...pages,
+    ...utils.pages,
     new MiniCssExtractPlugin({
       filename: '[name].css',
       chunkFilename: '[id].css'

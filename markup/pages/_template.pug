@@ -1,7 +1,9 @@
+include ../components/head/head.pug
+
 doctype html
 html
   head
-    title I'm a title
+    +head('default title')
   body
     block header
       include ../components/header/header.pug
