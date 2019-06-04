@@ -1,7 +1,6 @@
 import { Input, IInputData } from '../input';
 
 export class InputFile extends Input<HTMLInputElement>{
-  private file: any;
   constructor(element: HTMLInputElement){
     super(element);
     this
@@ -9,7 +8,7 @@ export class InputFile extends Input<HTMLInputElement>{
       .isEmptyListener();
   }
 
-  activateFile() {
+  private activateFile() {
     let defaultText = this.input.dataset.defaultValue || 'Файл в формате .doc, .pdf, .txt до 10MB';
 
     this.input.dataset.currentValue = defaultText;
