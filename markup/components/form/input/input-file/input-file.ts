@@ -1,7 +1,7 @@
 import { Input, IInputData } from '../input';
 
 export class InputFile extends Input<HTMLInputElement>{
-  constructor(element: HTMLInputElement){
+  public constructor(element: HTMLInputElement){
     super(element);
     this
       .activateFile()
@@ -12,7 +12,7 @@ export class InputFile extends Input<HTMLInputElement>{
     let defaultText = this.input.dataset.defaultValue || 'Файл в формате .doc, .pdf, .txt до 10MB';
 
     this.input.dataset.currentValue = defaultText;
-    this.input.addEventListener('change', (e) => {
+    this.input.addEventListener('change', () => {
       if (this.input.files[0]) {
         let nameFile = this.input.files[0].name;
         this.input.dataset.currentValue = nameFile;
@@ -24,9 +24,9 @@ export class InputFile extends Input<HTMLInputElement>{
     return this;
   }
 
-  getData(): IInputData  {
+  public getData(): IInputData  {
     let el = this.input;
-    return [...Array.from(el.files).map((item) => {
+    return [...Array.from(el.files).map((item: File) => {
       return {
         name: el.getAttribute('name'), 
         value: item

@@ -2,7 +2,7 @@ import {
   Header,
   Modal,
   Form
- } from "../../components/index";
+} from "../../components/index";
 
 (() => {
   [

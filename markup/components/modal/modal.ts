@@ -4,20 +4,20 @@ interface IModal extends ITemplateClass{
 }
 
 export class Modal implements IModal{
-  props: object;
-  elem: Element;
+  public props: object;
+  public elem: Element;
   private _buttonClose: Element;
 
-  public static init():void {
+  public static init(): void {
     const className = 'cf-modal';
     const elements = document.getElementsByClassName(className);
     const elemArr = Array.from(elements);
-    elemArr.map(elem => {
+    elemArr.map((elem: Element) => {
       new Modal(elem);
     })
   }
 
-  constructor(element: Element) {
+  public constructor(element: Element) {
     this.elem = element;
     this.elem.classList.add('hidden');
     this.buttonClose = this.elem.getElementsByClassName('close')[0];

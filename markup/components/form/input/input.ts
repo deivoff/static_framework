@@ -6,7 +6,7 @@ export type IInputForm = (HTMLInputElement | HTMLSelectElement | HTMLTextAreaEle
   step?: string;
 }
 
-type Data = {
+interface Data {
   name: string;
   value: string | Blob;
 }
@@ -17,7 +17,7 @@ export abstract class Input<T extends IInputForm>{
   protected errorNode: Element;
   protected customValidation = new CustomValidation(); 
 
-  constructor(element: T) {
+  public constructor(element: T) {
     this.input = element;
     this.errorNode = this.input.parentNode.querySelector('.error');
 
@@ -26,7 +26,7 @@ export abstract class Input<T extends IInputForm>{
       e.preventDefault();
     });
 
-    this.input.addEventListener('change', (e) => {
+    this.input.addEventListener('change', () => {
       this.check();
     })
     return this;
@@ -35,9 +35,9 @@ export abstract class Input<T extends IInputForm>{
   protected check() {
     this.input.setCustomValidity(
       this.customValidation
-      .checkValidity(this.input)
-      .getInvaliditiesString()
-      );
+        .checkValidity(this.input)
+        .getInvaliditiesString()
+    );
     this.setError();
   }
 
@@ -58,7 +58,7 @@ export abstract class Input<T extends IInputForm>{
   }
 
   protected isEmptyListener() {
-    this.input.addEventListener('change', (e) => {
+    this.input.addEventListener('change', () => {
       this.input.classList.remove('error');
 
       if (this.input.value !== '') {

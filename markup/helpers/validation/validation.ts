@@ -3,19 +3,19 @@ import { IInputForm } from '../../components/form/input/input';
 export class CustomValidation{ 
   private _invalidities: Set<string> = new Set;
 
-  set invalidities(value: Set<string>) {
-      this._invalidities = value;
+  public set invalidities(value: Set<string>) {
+    this._invalidities = value;
   }
 
-  get invalidities() {
+  public get invalidities() {
     return this._invalidities;
   }
 
-  getInvaliditiesString() {
+  public getInvaliditiesString() {
     return Array.from(this._invalidities).join(' \n');
   }
 
-  getInvaliditiesForHTML() {
+  public getInvaliditiesForHTML() {
     return Array.from(this._invalidities).join('<br>');
   }
 

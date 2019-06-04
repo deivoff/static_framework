@@ -4,31 +4,31 @@ import IMask from 'imask';
 export class InputMask extends Input<HTMLInputElement> {
   public mask: any;
 
-  constructor(element: HTMLInputElement){
+  public constructor(element: HTMLInputElement){
     super(element);
     this.mask = this.activateMask();
     this.isEmptyListener();
   }
 
   private activateMask() {
-      let mask = '';
-      let pattern = '';
-      const type = this.input.type || this.input.dataset.type;
-      switch (type) {
-          case 'tel': {
-              mask = '+{7}(000)000-00-00';
-              pattern = '+{7}(000)000-00-00';
-              return IMask(
-                  this.input,
-                  {
-                      mask: mask,
-                      pattern: pattern,
-                  });
-          }
-          default: {
-             return;
-          }
+    let mask = '';
+    let pattern = '';
+    const type = this.input.type || this.input.dataset.type;
+    switch (type) {
+      case 'tel': {
+        mask = '+{7}(000)000-00-00';
+        pattern = '+{7}(000)000-00-00';
+        return IMask(
+          this.input,
+          {
+            mask: mask,
+            pattern: pattern,
+          });
       }
+      default: {
+        return;
+      }
+    }
   }
 
   protected isEmptyListener() {

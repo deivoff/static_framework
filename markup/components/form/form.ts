@@ -19,7 +19,7 @@ export class Form {
     })
   }
   
-  constructor(element: HTMLFormElement) {
+  public constructor(element: HTMLFormElement) {
     this.form = element;
     this.inputs = this.inputsCreate();
     this.form.addEventListener('submit', (e) => {
@@ -83,20 +83,20 @@ export class Form {
   private inputsCreate() {
     const elements = Array.from(this.form.querySelectorAll('.cf-input'));
     const elemArr = elements.map((elem: IInputForm ) => {
-        if (elem instanceof HTMLInputElement)
-          switch (elem.type) {
-            case 'tel':
-              return new InputMask(elem);
-            case 'file':
-              return new InputFile(elem);
-            default:
-              return new InputDefault(elem);
-          }
-        else if (elem instanceof HTMLSelectElement)
-          return new InputSelect(elem);
-        else if (elem instanceof HTMLTextAreaElement)
-            return;
+      if (elem instanceof HTMLInputElement)
+        switch (elem.type) {
+          case 'tel':
+            return new InputMask(elem);
+          case 'file':
+            return new InputFile(elem);
+          default:
+            return new InputDefault(elem);
+        }
+      else if (elem instanceof HTMLSelectElement)
+        return new InputSelect(elem);
+      else if (elem instanceof HTMLTextAreaElement)
         return;
+      return;
     });
     return elemArr;
   }
