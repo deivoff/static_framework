@@ -1,0 +1,32 @@
+.bc-button
+  background linear-gradient(-45deg, rgba(0,0,0,1) 0%, rgba(23,115,73,1) 100%)
+  min-height 54px
+  min-width 200px
+  border-radius 27px
+  border none
+  color white
+  transition-duration .1s
+  transition-property all
+  position relative
+  overflow hidden
+
+  span 
+    position relative
+    z-index 2
+
+  &:before
+    opacity 0
+    height 100%
+    width 100%
+    content ''
+    position absolute
+    top 0
+    left 0
+    background linear-gradient(45deg, rgba(0,0,0,1) 0%, rgba(23,115,73,1) 100%)
+    transition-duration 3s
+    transition-property all
+
+  &:hover
+    &:before
+      opacity 1
+      

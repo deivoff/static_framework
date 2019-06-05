@@ -42,7 +42,7 @@ function css() {
       'include css': true
     }))
     .pipe(_postCss(plugins))
-    .pipe(_concat('main.css'))
+    .pipe(_concat('main.bundle.css'))
     .pipe(_sourcemaps.write('.'))
     .pipe(dest(_paths.css.output))
 }

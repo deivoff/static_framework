@@ -7,7 +7,7 @@ module.exports = {
   },
   css: {
     main: `/markup/static/${global.css.folder}/main.bundle.${global.css.extension}`,
-    output: `build/static/сss/`
+    output: `build/static/css/`
   },
   html: {
     entry: `/markup/pages`,

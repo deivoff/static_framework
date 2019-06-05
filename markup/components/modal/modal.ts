@@ -1,9 +1,8 @@
 import { ITemplateClass } from "../_template/_template";
 
-interface IModal extends ITemplateClass{
-}
 
-export class Modal implements IModal{
+
+export class Modal implements ITemplateClass{
   public props: object;
   public elem: Element;
   private _buttonClose: Element;

@@ -102,8 +102,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _input_input_file_input_file__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./input/input-file/input-file */ "./markup/components/form/input/input-file/input-file.ts");
 /* harmony import */ var _input_input_default_input_default__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./input/input-default/input-default */ "./markup/components/form/input/input-default/input-default.ts");
 /* harmony import */ var _input_input_select_input_select__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./input/input-select/input-select */ "./markup/components/form/input/input-select/input-select.ts");
-/* harmony import */ var _grecaptcha_v3_grecaptcha_v3__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./grecaptcha-v3/grecaptcha-v3 */ "./markup/components/form/grecaptcha-v3/grecaptcha-v3.ts");
-
 
 
 
@@ -121,14 +119,14 @@ var Form = /** @class */ (function () {
         return this;
     }
     Form.init = function () {
-        var className = 'cf-form';
+        var className = '_js-form';
         var elements = Array.from(document.getElementsByClassName(className));
         elements.map(function (elem) {
             new Form(elem);
         });
     };
     Form.prototype.formSubmit = function () {
-        this.sendForm(this.form.action, this.createFormData(), Object(_grecaptcha_v3_grecaptcha_v3__WEBPACK_IMPORTED_MODULE_5__["addTokenOnForm"])(this.form));
+        this.sendForm(this.form.action, this.createFormData());
     };
     Form.prototype.sendForm = function (url, data, middleCheck) {
         if (middleCheck === undefined) {
@@ -169,7 +167,7 @@ var Form = /** @class */ (function () {
         return formData;
     };
     Form.prototype.inputsCreate = function () {
-        var elements = Array.from(this.form.querySelectorAll('.cf-input'));
+        var elements = Array.from(this.form.querySelectorAll('._js-input'));
         var elemArr = elements.map(function (elem) {
             if (elem instanceof HTMLInputElement)
                 switch (elem.type) {
@@ -191,38 +189,6 @@ var Form = /** @class */ (function () {
     return Form;
 }());
 
-
-
-/***/ }),
-
-/***/ "./markup/components/form/grecaptcha-v3/grecaptcha-v3.ts":
-/*!***************************************************************!*\
-  !*** ./markup/components/form/grecaptcha-v3/grecaptcha-v3.ts ***!
-  \***************************************************************/
-/*! exports provided: addTokenOnForm */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addTokenOnForm", function() { return addTokenOnForm; });
-function addTokenOnForm(form) {
-    var token = sessionStorage.getItem('captcha');
-    if (token) {
-        var tokenInput = form.querySelector('input[name="token"]');
-        if (!tokenInput) {
-            tokenInput = document.createElement('input');
-            tokenInput.type = 'hidden';
-            tokenInput.name = 'token';
-            form.appendChild(tokenInput);
-        }
-        tokenInput.value = token;
-        return true;
-    }
-    else {
-        console.error('Or maybe you\'re a robot?');
-        return false;
-    }
-}
 
 
 /***/ }),
@@ -450,6 +416,7 @@ var InputSelect = /** @class */ (function (_super) {
         var _this = this;
         var choises = new choices_js__WEBPACK_IMPORTED_MODULE_1___default.a(element);
         _this = _super.call(this, element) || this;
+        _this.choises = choises;
         _this.isEmptyListener();
         return _this;
     }
@@ -459,6 +426,14 @@ var InputSelect = /** @class */ (function (_super) {
             name: el.getAttribute('name'),
             value: el.options[el.selectedIndex].value
         };
+    };
+    InputSelect.prototype.disabled = function () {
+        this.choises.disable();
+        return this;
+    };
+    InputSelect.prototype.enabled = function () {
+        this.choises.enable();
+        return this;
     };
     return InputSelect;
 }(_input__WEBPACK_IMPORTED_MODULE_0__["Input"]));

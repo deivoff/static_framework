@@ -11,7 +11,7 @@ export class Form {
   private inputs: Input<IInputForm>[];
 
   public static init() {
-    const className = 'cf-form';
+    const className = '_js-form';
 
     const elements = Array.from(document.getElementsByClassName(className));
     elements.map((elem: HTMLFormElement) => {
@@ -33,7 +33,7 @@ export class Form {
     this.sendForm(
       this.form.action,
       this.createFormData(),
-      addTokenOnForm(this.form)
+      // addTokenOnForm(this.form)
     )
   }
 
@@ -81,7 +81,7 @@ export class Form {
   }
 
   private inputsCreate() {
-    const elements = Array.from(this.form.querySelectorAll('.cf-input'));
+    const elements = Array.from(this.form.querySelectorAll('._js-input'));
     const elemArr = elements.map((elem: IInputForm ) => {
       if (elem instanceof HTMLInputElement)
         switch (elem.type) {
