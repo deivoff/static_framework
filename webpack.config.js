@@ -1,24 +1,31 @@
-const config = {
+const pathConfig = require('./configs/config-path');
+const TerserPlugin = require('terser-webpack-plugin');
+
+module.exports = {
+  mode: 'development',
+  devtool: 'source-map',
   entry: {
-    'static/js/main.bundle.js': './markup/static/ts/main.ts', // scripts
+    app: `.${pathConfig.js.entry}`
   },
   output: {
-    path: __dirname + '/build/',
-    filename: "[name]"
+    path: `${__dirname}${pathConfig.js.output}`,
+    filename: 'main.bundle.js'
   },
-  devtool: 'inline-source-map',
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'ts-loader'
+        }
       }
     ]
   },
-  resolve: {
-    extensions: [ '.tsx', '.ts', '.js' ]
+  resolve: { extensions: ['.ts', '.js'] },
+  optimization: {
+    minimizer: [new TerserPlugin({
+      parallel: true,
+    })],
   },
 };
-
-module.exports = config;
