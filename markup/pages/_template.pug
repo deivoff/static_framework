@@ -1,10 +1,13 @@
+include ../components/head/head.pug
+
 doctype html
 html
   head
-    title I'm a title
+    +head('default title')
   body
     block header
       include ../components/header/header.pug
     block content
     block footer
-  script(src="somescript.js")
+  script(src="static/js/main.bundle.js")
+  link(href="static/css/main.bundle.css" rel="stylesheet" type="text/css")

@@ -1,47 +1,31 @@
-const fs = require("fs");
-const path = require('path');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const pathConfig = require('./configs/config-path');
+const TerserPlugin = require('terser-webpack-plugin');
 
-const pages = fs.readdirSync('./markup/pages/')
-    .filter((fileName) => {
-      return fileName.indexOf('_template') < 0
-    })
-    .map((fileName) => {
-      return new HtmlWebpackPlugin({
-        filename: fileName.replace('pug', 'html'),
-        template: `./markup/pages/${fileName}`,
-        inject: false
-      })
-    })
-
-const config = {
+module.exports = {
+  mode: 'development',
+  devtool: 'source-map',
   entry: {
-      'static/js/main': './markup/static/js/main.js', // scripts
-      'css/main.css': './assets/scss/main.scss' //styles
+    app: `.${pathConfig.js.entry}`
   },
   output: {
-    path: path.resolve(__dirname, 'build'),
-    filename: '[name].bundle.js'
+    path: `${__dirname}${pathConfig.js.output}`,
+    filename: 'main.bundle.js'
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
-      },
-      {
-        test: /\.pug$/,
-        use: ['html-loader?attrs=false', 'pug-html-loader']
-      },
-      {
-        test: /\.styl$/,
-        use: ['style-loader!css-loader!stylus-loader']
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'ts-loader'
+        }
       }
     ]
   },
-  plugins: [
-    ...pages,
-  ]
+  resolve: { extensions: ['.ts', '.js'] },
+  optimization: {
+    minimizer: [new TerserPlugin({
+      parallel: true,
+    })],
+  },
 };
-
-module.exports = config;

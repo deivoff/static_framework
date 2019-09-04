@@ -1,4 +1,22 @@
 extends _template
 block content
    main
-    p Woah
+      p Oasdasdsss
+      include ../components/modal/modal.pug
+
+      form._js-form(action='/api/test')
+         input._js-input(type="text" name='erer')
+         select._js-input
+            option(value="sad") asdasd
+         input._js-input(type="tel" 
+            name='eeee' 
+            pattern='^((\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{7,10}$'
+            title='Пожалуйста, введите номер в формате "+7(XXX)XXX-XX-XX"' 
+            required)
+         button(type="submit").bc-button
+            span Jngfhdbn
+
+      // script(src="https://www.google.com/recaptcha/api.js?render=explicit&onload=onRecaptchaLoadCallback")
+      // script
+         include ../components/form/grecaptcha-v3/grecaptcha-v3(for_page).js
+      // .grecaptcha#grecaptcha
