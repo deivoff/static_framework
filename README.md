@@ -1,5 +1,5 @@
 # static_framework
-Static framework for Creative CO
+Static framework for develop static pages
 
 ## Form component
 
