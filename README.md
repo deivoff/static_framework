@@ -1,4 +1,5 @@
 # static_framework
+
 Static framework for develop static pages
 
 ## Form component
